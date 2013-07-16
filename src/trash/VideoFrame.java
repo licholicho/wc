@@ -1,9 +1,9 @@
-package com.bizo_mobile.ip_camera;
+package trash;
 
 import android.util.Log;
 import java.io.*;
 
-class VideoFrame extends OutputStream {
+public class VideoFrame extends OutputStream {
     private byte[] buffer;
     private int bufferLength;
     private int currentLength;

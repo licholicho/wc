@@ -1,4 +1,4 @@
-package com.bizo_mobile.ip_camera;
+package trash;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,7 +29,7 @@ import org.apache.http.protocol.ResponseContent;
 import org.apache.http.protocol.ResponseDate;
 import org.apache.http.protocol.ResponseServer;
 
-import Other.HttpCommandHandler;
+
 import android.content.Context;
 import android.util.Log;
 

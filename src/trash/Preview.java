@@ -1,4 +1,4 @@
-package Other;
+package trash;
 
 import java.io.IOException;
 import java.util.List;

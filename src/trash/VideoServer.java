@@ -1,8 +1,12 @@
-package com.bizo_mobile.ip_camera;
+package trash;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import com.bizo_mobile.ip_camera.R;
+import com.bizo_mobile.ip_camera.R.id;
+import com.bizo_mobile.ip_camera.R.layout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
