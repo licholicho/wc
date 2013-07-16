@@ -29,15 +29,18 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
-        try {
+    	Log.i("Server", "Started");
+    	try {
             ss = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        Log.i("Server", "Started");
         executor = Executors.newFixedThreadPool(maxThreads);
         while(!isStopped()) {
             try {
                 Socket clientSocket = ss.accept();
+                Log.i("Server", "Duck: Server accepted");
                 executor.execute(new ThreadHandler(clientSocket));
             } catch (IOException e) {
                 e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

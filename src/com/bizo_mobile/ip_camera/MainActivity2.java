@@ -96,7 +96,11 @@ public class MainActivity2 extends Activity implements
 		};
 		connectButton.setOnClickListener(connectButtonListener);
 		initCamera();
+		Log.i("Activity2", "prepare for start of server");
 		this.imageServerThread=new Thread(new Server());
+		imageServerThread.start();
+		
+		//Log.i("Activity2", imageServerThread.getState().toString());
 	}
 
 	@Override
