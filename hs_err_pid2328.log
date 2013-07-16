@@ -1,0 +1,125 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (javaClasses.cpp:129), pid=2328, tid=3680
+#  fatal error: Invalid layout of preloaded class
+#
+# JRE version: 7.0_15-b03
+# Java VM: Java HotSpot(TM) Client VM (23.7-b01 mixed mode windows-x86 )
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00858400):  JavaThread "Unknown thread" [_thread_in_vm, id=3680, stack(0x00900000,0x00950000)]
+
+Stack: [0x00900000,0x00950000],  sp=0x0094fb2c,  free space=318k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x16f261]
+V  [jvm.dll+0x1693d6]
+V  [jvm.dll+0x2079f]
+V  [jvm.dll+0x20826]
+V  [jvm.dll+0x2e5bd]
+V  [jvm.dll+0x2e869]
+V  [jvm.dll+0x77ba1]
+V  [jvm.dll+0x77f5b]
+V  [jvm.dll+0x1290e1]
+V  [jvm.dll+0x149b3a]
+V  [jvm.dll+0xa98df]
+C  [javaw.exe+0x13ca]
+C  [javaw.exe+0x1e3c]
+C  [javaw.exe+0xa5a1]
+C  [javaw.exe+0xa62b]
+C  [kernel32.dll+0xb729]  GetModuleFileNameA+0x1ba
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x00858400 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=3680, stack(0x00900000,0x00950000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 0.250 loading class 0x02a205b8 done
+Event: 0.250 loading class 0x0085fee8 done
+Event: 0.250 loading class 0x0085fec0
+Event: 0.250 loading class 0x02a75188
+Event: 0.251 loading class 0x02a75188 done
+Event: 0.251 loading class 0x02a751c0
+Event: 0.251 loading class 0x02a751c0 done
+Event: 0.251 loading class 0x02a751f8
+Event: 0.251 loading class 0x02a751f8 done
+Event: 0.251 loading class 0x0085fec0 done
+
+
+Dynamic libraries:
+0x00400000 - 0x0042f000 	C:\Program Files\Java\jre7\bin\javaw.exe
+0x7c900000 - 0x7c9b4000 	C:\WINDOWS\system32\ntdll.dll
+0x7c800000 - 0x7c8fd000 	C:\WINDOWS\system32\kernel32.dll
+0x77dc0000 - 0x77e6c000 	C:\WINDOWS\system32\ADVAPI32.dll
+0x77e70000 - 0x77f03000 	C:\WINDOWS\system32\RPCRT4.dll
+0x77fe0000 - 0x77ff1000 	C:\WINDOWS\system32\Secur32.dll
+0x7e360000 - 0x7e3f1000 	C:\WINDOWS\system32\USER32.dll
+0x77f10000 - 0x77f59000 	C:\WINDOWS\system32\GDI32.dll
+0x773c0000 - 0x774c3000 	C:\WINDOWS\WinSxS\x86_Microsoft.Windows.Common-Controls_6595b64144ccf1df_6.0.2600.6028_x-ww_61e65202\COMCTL32.dll
+0x77c00000 - 0x77c58000 	C:\WINDOWS\system32\msvcrt.dll
+0x77f60000 - 0x77fd6000 	C:\WINDOWS\system32\SHLWAPI.dll
+0x76360000 - 0x7637d000 	C:\WINDOWS\system32\IMM32.DLL
+0x78aa0000 - 0x78b5e000 	C:\Program Files\Java\jre7\bin\msvcr100.dll
+0x6e7c0000 - 0x6eb0c000 	C:\Program Files\Java\jre7\bin\client\jvm.dll
+0x71a70000 - 0x71a7a000 	C:\WINDOWS\system32\WSOCK32.dll
+0x71a50000 - 0x71a67000 	C:\WINDOWS\system32\WS2_32.dll
+0x71a40000 - 0x71a48000 	C:\WINDOWS\system32\WS2HELP.dll
+0x76b20000 - 0x76b4e000 	C:\WINDOWS\system32\WINMM.dll
+0x76be0000 - 0x76beb000 	C:\WINDOWS\system32\PSAPI.DLL
+0x6bd00000 - 0x6bd0d000 	C:\WINDOWS\system32\SYNCOR11.DLL
+0x6e710000 - 0x6e71c000 	C:\Program Files\Java\jre7\bin\verify.dll
+0x6d4c0000 - 0x6d4e0000 	C:\Program Files\Java\jre7\bin\java.dll
+0x6e7a0000 - 0x6e7b3000 	C:\Program Files\Java\jre7\bin\zip.dll
+0x59bc0000 - 0x59c61000 	C:\WINDOWS\system32\dbghelp.dll
+0x77bf0000 - 0x77bf8000 	C:\WINDOWS\system32\VERSION.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1250 -Xbootclasspath:C:\Documents and Settings\Elwira\Pulpit\adt-bundle-windows-x86\sdk\platforms\android-17\android.jar 
+java_command: com.bizo_mobile.ip_camera.Server
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:/Program Files/Java/jre7/bin/client;C:/Program Files/Java/jre7/bin;C:/Program Files/Java/jre7/lib/i386;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\Program Files\Java\jdk1.7.0_15\bin;C:\Documents and Settings\Elwira\Pulpit\adt-bundle-windows-x86\sdk\;ANT_HOME\bin;C:\Documents and Settings\Elwira\Pulpit\adt-bundle-windows-x86\eclipse;
+USERNAME=Elwira
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 10 Stepping 0, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows XP Build 2600 Dodatek Service Pack 3
+
+CPU:total 1 (1 cores per cpu, 1 threads per core) family 6 model 10 stepping 0, cmov, cx8, fxsr, mmx, sse, mmxext, 3dnowpref, tsc
+
+Memory: 4k page, physical 1310236k(263072k free), swap 3127228k(2081448k free)
+
+vm_info: Java HotSpot(TM) Client VM (23.7-b01) for windows-x86 JRE (1.7.0_15-b03), built on Feb 15 2013 14:01:25 by "java_re" with unknown MS VC++:1600
+
+time: Mon Jul 15 11:17:49 2013
+elapsed time: 0 seconds
+

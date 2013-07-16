@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    
+
+    <Button
+        android:id="@+id/web_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start" />
+
+ <Spinner
+    android:id="@+id/resolution_spinner"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    
+    />
+ 
+
+    <Spinner android:id="@+id/fps_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"/>
+    
+    <TextView
+        android:id="@+id/orientation"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+           
+        />
+     <Spinner android:id="@+id/orientation_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:drawSelectorOnTop="true"/>
+
+     <EditText
+         android:id="@+id/port"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:ems="10"
+         android:inputType="text"
+         android:text="8000"
+          >
+
+     </EditText>
+
+     <EditText
+         android:id="@+id/editText2"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:ems="10"
+         android:inputType="textPassword" />
+
+</LinearLayout>
