@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import trash.WebServerService;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;

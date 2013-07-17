@@ -7,10 +7,13 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-<uses-permission android:name="android.permission.INTERNET"/>
- <uses-permission android:name="android.permission.CAMERA" />
- <uses-feature android:name="android.hardware.camera" />
- <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,22 +22,26 @@
         <activity
             android:name="com.bizo_mobile.ip_camera.SettingsActivity"
             android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.bizo_mobile.ip_camera.MainActivity2"
+            android:label="@string/app_name" >
+        </activity>
+
+        <service
+            android:name="trash.WebServerService"
+            android:enabled="true" >
+        </service>
+
+        <activity
+            android:name="com.bizo_mobile.ip_camera.ServerTest"
+            android:label="@string/title_activity_server_test" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-          <activity
-            android:name="com.bizo_mobile.ip_camera.MainActivity2"
-            android:label="@string/app_name" >
-            
-        </activity>
-         <service 
-             android:enabled = "true"
-             android:name="com.bizo_mobile.ip_camera.WebServerService"></service>
-
-               
     </application>
 
 </manifest>

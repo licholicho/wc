@@ -1,10 +1,12 @@
-package com.bizo_mobile.ip_camera;
+package trash;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+
+import com.bizo_mobile.ip_camera.Server;
 
 import android.app.Service;
 import android.content.Intent;
@@ -25,8 +27,8 @@ public class WebServerService extends Service {
 		super.onCreate();
 	//	server = new WebServer(this);
 		//server.startServer();
-		server = new Server();
-		server.run();
+//		server = new Server();
+//		server.run();
 	
 	}
 
