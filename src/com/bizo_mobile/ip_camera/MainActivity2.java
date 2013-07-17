@@ -1,5 +1,8 @@
 package com.bizo_mobile.ip_camera;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -10,6 +13,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.os.Bundle;
@@ -36,7 +41,9 @@ public class MainActivity2 extends Activity implements
 	private OnClickListener backButtonListener;
 	private OnClickListener connectButtonListener;
 	private Thread imageServerThread;
-
+	private Server server = new Server(); 
+	private int previewFormat;
+	
 	@Override
 	public void onCameraReady() {
 		Log.i("oncamera", "ready");
@@ -98,8 +105,8 @@ public class MainActivity2 extends Activity implements
 		initCamera();
 		
 		Log.i("Activity2", "prepare for start of server");
-//		this.imageServerThread=new Thread(new Server());
-//		imageServerThread.start();
+		this.imageServerThread=new Thread(server);
+		imageServerThread.start();
 		
 		//Log.i("Activity2", imageServerThread.getState().toString());
 	}
@@ -113,6 +120,14 @@ public class MainActivity2 extends Activity implements
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+	Log.i("DESTROY","ON DESTROY");
+			    if (cameraView !=null)
+			    {
+			        cameraView.stopPreview();
+			        cameraView.release();
+			    
+			    }
+
 	}
 
 	@Override
@@ -128,20 +143,25 @@ public class MainActivity2 extends Activity implements
 	@Override
 	public void onPause() {
 		super.onPause();
+		Log.i("PAUSE","ON PAUSE");
 		inProc = true;
 		// if ( webServer != null)
 		// webServer.stop();
-		cameraView.stopPreview();
+		//cameraView.stopPreview(); *
 		// cameraView_.Release();
-
+		//cameraView.release();
 		// System.exit(0);
-		finish();
+		//finish();
 	}
 
 	private void initCamera() {
 		SurfaceView cameraSurface = (SurfaceView) findViewById(R.id.surview);
-		cameraView = new CamView(cameraSurface, camOrient, fps, size);
+		cameraView = new CamView(cameraSurface, camOrient, fps, size, previewCb);
+		if(cameraView!=null) Log.i("null","null init");
 		cameraView.setCameraReadyCallback(this);
+	//	previewFormat = cameraView.getPreviewFormat();
+	//	cameraView.stopPreview();
+		// cameraView.startPreview();
 	}
 
 	private String getLocalIpAddress() {
@@ -167,16 +187,57 @@ public class MainActivity2 extends Activity implements
 		public void onPreviewFrame(byte[] frame, Camera c) {
 			if (!inProc) {
 				inProc = true;
+				Log.i("onpreviewframe","STart!");
+				int picWidth = size[0];//cameraView.getWidth();
+				int picHeight = size[1];//cameraView.getHeight();
+				
+			//	ByteBuffer bbuffer = ByteBuffer.wrap(frame);
+			//	bbuffer.get(preFrame, 0, picWidth * picHeight + picWidth * picHeight / 2);
+				
+				 YuvImage image = new YuvImage(frame, cameraView.getPreviewFormat(),
+			                picWidth, picHeight, null);
+			    /*    File file = new File(Environment.getExternalStorageDirectory()
+			                .getPath() + "/out.jpg");
+			        FileOutputStream filecon = null;
+					try {
+						filecon = new FileOutputStream(file);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			        ;*/
+			/////////////////////
+				// Rect rect = new Rect(0, 0, image.getWidth(), image.getHeight());
+				 ByteArrayOutputStream output_stream = new ByteArrayOutputStream();
+				 image.compressToJpeg(
+			                new Rect(0, 0, picWidth, picHeight), 90,
+			                output_stream);
+				 byte[] byt=output_stream.toByteArray();
 
-				int picWidth = cameraView.getWidth();
-				int picHeight = cameraView.getHeight();
-				ByteBuffer bbuffer = ByteBuffer.wrap(frame);
-				bbuffer.get(preFrame, 0, picWidth * picHeight + picWidth
-						* picHeight / 2);
-
+			//	server.addPhoto(output_stream);
+			//	 Preview.this.invalidate();
+				 
+				 server.addPhoto(output_stream);
+				/* try {
+					server.serverOut.writeBytes("Content-type: image/jpg\n\n");
+					Server.photo.writeTo(server.serverOut);
+					server.serverOut.writeBytes("--" + "sdf" + "\n");
+					server.serverOut.flush();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}*/
+				/// cameraView.getView().invalidate();
+				 
+				
+				 
+				 
 				inProc = false;
 			}
 		}
 	};
 
+	
+	
+	
 }

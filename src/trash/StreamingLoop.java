@@ -1,4 +1,4 @@
-package com.bizo_mobile.ip_camera;
+package trash;
 
 import java.io.File;
 import java.io.FileDescriptor;

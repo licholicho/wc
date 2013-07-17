@@ -23,7 +23,7 @@ public class CamView implements SurfaceHolder.Callback {
 	private int orientation;
 	private int fps[];
 	private int size[];
-	
+	private PreviewCallback pvcb;
 	private List<Camera.Size> supportedSizes;
 	private Camera.Size procSize;
 	private boolean inProc = false;
@@ -34,9 +34,10 @@ public class CamView implements SurfaceHolder.Callback {
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		surfaceHolder.addCallback(this);
 		orientation = orient;
+		
 	}
 	
-	public CamView(SurfaceView sv, int orient, int[] fps, int[] size) {
+	public CamView(SurfaceView sv, int orient, int[] fps, int[] size, PreviewCallback pvcb) {
 		surfaceView = sv;
 		surfaceHolder = surfaceView.getHolder();
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -44,6 +45,7 @@ public class CamView implements SurfaceHolder.Callback {
 		orientation = orient;
 		this.fps = fps;
 		this.size = size;
+		this.pvcb = pvcb;
 	}
 	
 	public List<Camera.Size> getSupportedPreviewSize () {
@@ -57,6 +59,10 @@ public class CamView implements SurfaceHolder.Callback {
 
 	public int getHeight() {
 		return procSize.height;
+	}
+	
+	public SurfaceView getView(){
+		return surfaceView;
 	}
 	
 	public void setCameraReadyCallback(CameraReadyCallback cb) {
@@ -123,7 +129,10 @@ public class CamView implements SurfaceHolder.Callback {
 		p.setPreviewSize(procSize.width, procSize.height);
 		*/
 		/******************/
+		Log.i("SetupCam","before");
+		if(camera == null)
 		camera = Camera.open();
+		Log.i("SetupCam","after");
 		procSize = camera.new Size(0,0);
 		Camera.Parameters p = camera.getParameters();
 		procSize.width = size[0];
@@ -132,13 +141,18 @@ public class CamView implements SurfaceHolder.Callback {
 		camera.setParameters(p);
 		Log.i("sss","res:"+procSize.width+" "+procSize.height+" fps:"+fps[0]+"-"+fps[1]);
 		camera.setDisplayOrientation(orientation);
-		
+		camera.setPreviewCallback(pvcb);
 		try {
 			camera.setPreviewDisplay(surfaceHolder);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		camera.startPreview();
+	}
+	
+	public int getPreviewFormat(){
+		Camera.Parameters p = camera.getParameters();
+		return p.getPreviewFormat();
 	}
 	
 	public void run() {
@@ -161,7 +175,13 @@ public class CamView implements SurfaceHolder.Callback {
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		release();
+		       if (camera != null) {
+		           camera.stopPreview();
+		           camera.setPreviewCallback(null);
+		           camera.release();
+		           camera = null;
+		       }
+		   
 	}
 
 }

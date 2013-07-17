@@ -9,15 +9,10 @@ import java.util.Enumeration;
 import java.util.List;
 
 import trash.WebServerService;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,11 +24,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class SettingsActivity extends Activity implements OnItemSelectedListener {
 
-	private Camera camera;
+	private Camera camera = null;
 		//private Button startButton;
 	//private OnClickListener startListener;
 	private Button webButton;
@@ -49,17 +43,15 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	private int[] selectedFps = new int[2];
 	private WebServerService s;
 	private EditText port;
+	private int min, max;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        if (camera == null) camera = Camera.open();
-        supportedSizes = camera.getParameters().getSupportedPreviewSizes();
-        fpsRange = camera.getParameters().getSupportedPreviewFpsRange();
+        
         setContentView(R.layout.settings_layout);
         initialize();
-        
         port = (EditText)findViewById(R.id.port);
         final String portNumber = port.getText().toString();
        /* final ServiceConnection mConnection = new ServiceConnection() {
@@ -77,9 +69,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
         webButton = (Button) findViewById(R.id.web_button);
         webListener = new OnClickListener() {
 		    public void onClick(View view) {
-		    
-		    	if(camera != null)
-		    	camera.release();
+		       
 		  	Intent intent = new Intent();
 		    	intent.setClass(view.getContext(),MainActivity2.class);
 		    	intent.putExtra("orientation", orientation);
@@ -147,8 +137,8 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
     	    @Override
     	    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) 
     	    {
-    	    	 	selectedFps[0] = fpsRange.get(position)[Camera.Parameters.PREVIEW_FPS_MIN_INDEX];
-    	    	 	selectedFps[1] = fpsRange.get(position)[Camera.Parameters.PREVIEW_FPS_MAX_INDEX];
+    	    	 	selectedFps[0] = fpsRange.get(position)[min];
+    	    	 	selectedFps[1] = fpsRange.get(position)[max];
     	    	 	Log.i("fff",selectedFps[0]+"-"+selectedFps[1]);
     	 // todo
     	    }
@@ -189,6 +179,18 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
     } 
 
 	public void initialize(){
+		/* if (camera != null){
+			 Log.i("camera","!= null");
+			 camera.release();
+			 camera = null;
+		 }*/
+		 if(camera == null)  {
+			 camera = Camera.open();
+		 }
+		 min = Camera.Parameters.PREVIEW_FPS_MIN_INDEX;
+		 max = Camera.Parameters.PREVIEW_FPS_MAX_INDEX;
+		 supportedSizes = camera.getParameters().getSupportedPreviewSizes();
+	     fpsRange = camera.getParameters().getSupportedPreviewFpsRange();
 		Camera.Size result = null;
 		String res = null;
 	    for (int i=0;i<supportedSizes.size();i++){
@@ -197,10 +199,17 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	        resolutionOptions.add(res);
 	    }
 	    for (int j=0;j<fpsRange.size();j++){
-	    	fpsOptions.add(fpsRange.get(j)[Camera.Parameters.PREVIEW_FPS_MIN_INDEX]/1000
-	    			+"-"+fpsRange.get(j)[Camera.Parameters.PREVIEW_FPS_MAX_INDEX]/1000);
+	    	fpsOptions.add(fpsRange.get(j)[min]/1000+"-"+fpsRange.get(j)[max]/1000);
 	    	 Log.i("fps", fpsOptions.get(j));
 	    }
+	    if(camera != null) {
+	    	camera.release();
+	    	Log.i("initialize","released");
+	    	camera = null;
+	    }
+	    	
+	    
+	    
 	}
 
 
@@ -237,8 +246,29 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	        return "No IP Available";
 	    }
 	
-	  
-	  
+		@Override
+	    protected void onPause() {
+			  super.onPause();
+			  Log.i("PAUSE S","PAUSE S");
+			    if (camera!=null)
+			    {
+			        camera.stopPreview();
+			        camera.release();
+			        camera = null;
+			    }
+		}
+
+		@Override
+	    protected void onDestroy() {
+			  super.onDestroy();
+			    if (camera!=null)
+			    {
+			        camera.stopPreview();
+			        camera.release();
+			        camera=null;
+			    }
+		}
+
 	
 		  
 		  

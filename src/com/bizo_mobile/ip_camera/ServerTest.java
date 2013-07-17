@@ -1,12 +1,16 @@
 package com.bizo_mobile.ip_camera;
 
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +26,8 @@ public class ServerTest extends Activity {
 		setContentView(R.layout.activity_server_test);
 		this.imageView = (ImageView) this.findViewById(R.id.imageView1);
 		Button photoButton = (Button) this.findViewById(R.id.button1);
+		String s = getLocalIpAddress();
+		Log.i("ip",s);
 		photoButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -51,4 +57,24 @@ public class ServerTest extends Activity {
 		}
 	}
 
+	
+	private String getLocalIpAddress() {
+		try {
+			for (Enumeration<NetworkInterface> en = NetworkInterface
+					.getNetworkInterfaces(); en.hasMoreElements();) {
+				NetworkInterface intf = en.nextElement();
+				for (Enumeration<InetAddress> enumIpAddr = intf
+						.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+					InetAddress inetAddress = enumIpAddr.nextElement();
+					if (!inetAddress.isLoopbackAddress()) {
+						return inetAddress.getHostAddress().toString();
+					}
+				}
+			}
+		} catch (SocketException ex) {
+			return "ERROR Obtaining IP";
+		}
+		return "No IP Available";
+	}
+	
 }

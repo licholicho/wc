@@ -7,6 +7,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,6 +23,8 @@ public class Server implements Runnable {
 	private int maxThreads = 10;
 	private boolean stopped = false;
 	static ByteArrayOutputStream photo;
+	//public static DataOutputStream serverOut;
+//	static byte[] bytes;
 	// public static void main(String args[]) throws InterruptedException {
 	// Thread serverThread = new Thread(new Server());
 	// serverThread.start();
@@ -32,8 +35,17 @@ public class Server implements Runnable {
 		addPhoto(out);
 	}
 	
+	public Server() {
+		
+	}
+	
+	public void addToOos(byte [] b){
+//		Server.bytes = b;
+	}
+	
 	public void addPhoto(ByteArrayOutputStream out) {
 		Server.photo = out;
+		Log.i("addPhoto","add");
 	}
 
 	@Override
@@ -70,6 +82,7 @@ class ThreadHandler implements Runnable {
 	private Socket client;
 	private DataInputStream in;
 	private DataOutputStream out;
+//	private ObjectOutputStream oos;
 	private static final String BOUNDARY = "arflebarfle";
 
 	ThreadHandler(Socket clientSocket) {
@@ -82,9 +95,13 @@ class ThreadHandler implements Runnable {
 		Log.i("lece", "");
 		try {
 			in = new DataInputStream(client.getInputStream());
+			/*Server.serverOut = new DataOutputStream(new BufferedOutputStream(
+						client.getOutputStream()));*/
 			out = new DataOutputStream(new BufferedOutputStream(
 					client.getOutputStream()));
-
+			//oos = new ObjectOutputStream(new BufferedOutputStream(
+				//	client.getOutputStream()));
+			
 		} catch (IOException io) {
 			try {
 				client.close();
@@ -113,6 +130,9 @@ class ThreadHandler implements Runnable {
 			Server.photo.writeTo(out);
 			out.writeBytes("--" + BOUNDARY + "\n");
 			out.flush();
+			//oos.writeObject(Server.bytes);
+			//oos.flush();*/
+			
 		} catch (IOException e) {
 			e.printStackTrace(); // To change body of catch statement use File |
 									// Settings | File Templates.
@@ -128,4 +148,8 @@ class ThreadHandler implements Runnable {
 		out.writeBytes("\r\n");
 		out.writeBytes("--" + BOUNDARY + "\n");
 	}
+	
+	
+	
+	
 }
