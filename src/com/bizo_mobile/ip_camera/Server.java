@@ -1,16 +1,14 @@
 package com.bizo_mobile.ip_camera;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Iterator;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,52 +20,45 @@ public class Server implements Runnable {
 	private ExecutorService executor;
 	private int maxThreads = 10;
 	private boolean stopped = false;
-	static ByteArrayOutputStream photo;
-	//public static DataOutputStream serverOut;
-//	static byte[] bytes;
+	static ConcurrentLinkedQueue<ByteArrayOutputStream> photos = new ConcurrentLinkedQueue<ByteArrayOutputStream>();
+
 	// public static void main(String args[]) throws InterruptedException {
 	// Thread serverThread = new Thread(new Server());
 	// serverThread.start();
 	// serverThread.join();
 	// }
-	
+
 	public Server(ByteArrayOutputStream out) {
 		addPhoto(out);
 	}
-	
+
 	public Server() {
-		
+
 	}
-	
-	public void addToOos(byte [] b){
-//		Server.bytes = b;
-	}
-	
+
 	public void addPhoto(ByteArrayOutputStream out) {
-		Server.photo = out;
-		Log.i("addPhoto","add");
+		photos.add(out);
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void run() {
-		Log.i("Server", "Started");
 		try {
 			ss = new ServerSocket(port);
 		} catch (IOException e) {
-			e.printStackTrace(); // To change body of catch statement use File |
-									// Settings | File Templates.
+			e.printStackTrace();
 		}
-		Log.i("Server", "Started");
 		executor = Executors.newFixedThreadPool(maxThreads);
-		Log.i("Server", "Executor passed");
 		while (!isStopped()) {
 			try {
 				Socket clientSocket = ss.accept();
-				Log.i("Server", "Duck: Server accepted");
 				executor.execute(new ThreadHandler(clientSocket));
 			} catch (IOException e) {
-				e.printStackTrace(); // To change body of catch statement use
-										// File | Settings | File Templates.
+				e.printStackTrace();
 			}
 
 		}
@@ -82,8 +73,8 @@ class ThreadHandler implements Runnable {
 	private Socket client;
 	private DataInputStream in;
 	private DataOutputStream out;
-//	private ObjectOutputStream oos;
 	private static final String BOUNDARY = "arflebarfle";
+	private Iterator<ByteArrayOutputStream> iterator = Server.photos.iterator();
 
 	ThreadHandler(Socket clientSocket) {
 		this.client = clientSocket;
@@ -91,51 +82,40 @@ class ThreadHandler implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("hej");
-		Log.i("lece", "");
 		try {
 			in = new DataInputStream(client.getInputStream());
-			/*Server.serverOut = new DataOutputStream(new BufferedOutputStream(
-						client.getOutputStream()));*/
 			out = new DataOutputStream(new BufferedOutputStream(
 					client.getOutputStream()));
-			//oos = new ObjectOutputStream(new BufferedOutputStream(
-				//	client.getOutputStream()));
-			
 		} catch (IOException io) {
 			try {
 				client.close();
 			} catch (IOException e) {
-				e.printStackTrace(); // To change body of catch statement use
-										// File | Settings | File Templates.
+				e.printStackTrace();
 			}
 			return;
 		}
 
 		try {
 			sendWelcomeMsg();
-			int bytesRead;
-			byte[] barr = new byte[1024];
-			out.writeBytes("Content-type: image/jpg\n\n");
-//			String fname = "test.jpeg";
-			// DataInputStream fis = new DataInputStream(new
-			// BufferedInputStream(new FileInputStream(fname)));
-//			DataInputStream fis = new DataInputStream(new BufferedInputStream(
-//					this.getClass().getResourceAsStream(fname)));
-//			DataInputStream fis = new DataInputStream(in)
-//			while ((bytesRead = fis.read(barr)) != -1) {
-//				out.write(barr, 0, bytesRead);
-//			}
-//			fis.close();
-			Server.photo.writeTo(out);
-			out.writeBytes("--" + BOUNDARY + "\n");
-			out.flush();
-			//oos.writeObject(Server.bytes);
-			//oos.flush();*/
-			
+			while (true) {
+				while (iterator.hasNext()) {
+					out.writeBytes("Content-type: image/jpg\n\n");
+					iterator.next().writeTo(out);
+					iterator.remove();
+					out.writeBytes("--" + BOUNDARY + "\n");
+					out.flush();
+				}
+				iterator = Server.photos.iterator();
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				Log.i("protos", "size" + Server.photos.size());
+			}
 		} catch (IOException e) {
-			e.printStackTrace(); // To change body of catch statement use File |
-									// Settings | File Templates.
+			
+			e.printStackTrace();
 		}
 
 	}
@@ -147,9 +127,7 @@ class ThreadHandler implements Runnable {
 				+ BOUNDARY + "\r\n");
 		out.writeBytes("\r\n");
 		out.writeBytes("--" + BOUNDARY + "\n");
+
 	}
-	
-	
-	
-	
+
 }
