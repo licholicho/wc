@@ -1,23 +1,26 @@
 package com.bizo_mobile.ip_camera;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.nio.ByteBuffer;
 import java.util.Enumeration;
 
+import trash.WebServerService;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.View;
@@ -40,10 +43,8 @@ public class MainActivity2 extends Activity implements
 	private Button connectButton;
 	private OnClickListener backButtonListener;
 	private OnClickListener connectButtonListener;
-	private Thread imageServerThread;
 	private Server server = new Server();
-	private int previewFormat;
-
+	
 	@Override
 	public void onCameraReady() {
 		Log.i("oncamera", "ready");
@@ -75,9 +76,11 @@ public class MainActivity2 extends Activity implements
 		setContentView(R.layout.main_layout);
 		backButton = (Button) findViewById(R.id.backButton);
 		connectButton = (Button) findViewById(R.id.howButton);
+ 
 		backButtonListener = new OnClickListener() {
 			public void onClick(View view) {
-				// run in background
+				createNotification();
+				appExit();
 			}
 		};
 		backButton.setOnClickListener(backButtonListener);
@@ -103,12 +106,7 @@ public class MainActivity2 extends Activity implements
 		};
 		connectButton.setOnClickListener(connectButtonListener);
 		initCamera();
-
-		Log.i("Activity2", "prepare for start of server");
-		this.imageServerThread = new Thread(server);
-		imageServerThread.start();
-
-		// Log.i("Activity2", imageServerThread.getState().toString());
+		startService(new Intent(this, WebServerService.class));
 	}
 
 	@Override
@@ -202,4 +200,32 @@ public class MainActivity2 extends Activity implements
 		}
 	};
 
+	
+	public void createNotification() {
+		Log.i("notification","notification");
+	    Intent intent = new Intent(this, SettingsActivity.class);
+	    PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+	    Notification notification = new NotificationCompat.Builder(this)
+	        .setContentTitle("Camera IP")
+	        .setContentText("Subject").setSmallIcon(R.drawable.ic_launcher)
+	        .setContentIntent(pIntent)
+	        .addAction(R.drawable.ic_launcher, "Call", pIntent)
+	        .addAction(R.drawable.ic_launcher, "More", pIntent)
+	        .addAction(R.drawable.ic_launcher, "And more", pIntent).build();
+	    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+	    notification.flags |= Notification.FLAG_AUTO_CANCEL;
+	    notificationManager.notify(0, notification);
+	  }
+	
+	public void appExit()
+	{
+		Log.i("app","exit");
+	    this.finish();
+	    Intent intent = new Intent(Intent.ACTION_MAIN);
+	    intent.addCategory(Intent.CATEGORY_HOME);
+	    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	    startActivity(intent);
+	}
+	
 }

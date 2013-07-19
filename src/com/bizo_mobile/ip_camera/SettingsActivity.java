@@ -28,8 +28,6 @@ import android.widget.TextView;
 public class SettingsActivity extends Activity implements OnItemSelectedListener {
 
 	private Camera camera = null;
-		//private Button startButton;
-	//private OnClickListener startListener;
 	private Button webButton;
 	private OnClickListener webListener;
 	private TextView selectedOrientation;
@@ -41,7 +39,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	private List<int[]> fpsRange;
 	private List<String> fpsOptions = new ArrayList<String>();
 	private int[] selectedFps = new int[2];
-	private WebServerService s;
+	//private WebServerService s;
 	private EditText port;
 	private int min, max;
 	
@@ -49,59 +47,21 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        
         setContentView(R.layout.settings_layout);
         initialize();
         port = (EditText)findViewById(R.id.port);
         final String portNumber = port.getText().toString();
-       /* final ServiceConnection mConnection = new ServiceConnection() {
-
-            public void onServiceConnected(ComponentName className, IBinder binder) {
-              s = ((WebServerService.MyBinder) binder).getService();
-              Toast.makeText(SettingsActivity.this, "Connected", Toast.LENGTH_SHORT)
-                  .show();
-            }
-
-            public void onServiceDisconnected(ComponentName className) {
-              s = null;
-            }
-          };*/
         webButton = (Button) findViewById(R.id.web_button);
         webListener = new OnClickListener() {
 		    public void onClick(View view) {
 		       
-		  	Intent intent = new Intent();
+		    	Intent intent = new Intent();
 		    	intent.setClass(view.getContext(),MainActivity2.class);
 		    	intent.putExtra("orientation", orientation);
 		    	intent.putExtra("resolution", selectedSize);
 		    	intent.putExtra("fps",selectedFps);
 		    	intent.putExtra("port", portNumber);
 		    	startActivity(intent);
-		      String s = getLocalIpAddress();
-		        Log.i("IP",s);
-
-		       /* Thread t = new Thread(){
-		        	public void run(){
-		        		Log.i("run","");
-		        		// startService(new Intent(getApplicationContext(),WebServerService.class));
-		        		getApplicationContext().bindService(
-		        	        new Intent(getApplicationContext(), WebServerService.class),
-		        	        mConnection,
-		        	        Context.BIND_AUTO_CREATE
-		        	    );
-		        	}
-		        	};*/
-		     /*   
-		       Thread t = new Thread(new Runnable()
-		        {
-		        @Override
-		        public void run()
-		        {
-		        	startService(new Intent(getApplicationContext(),WebServerService.class)); 
-		        }
-		        });
-		        	t.start();
-		   */
 		    }
         };
         webButton.setOnClickListener(webListener);
@@ -139,8 +99,6 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
     	    {
     	    	 	selectedFps[0] = fpsRange.get(position)[min];
     	    	 	selectedFps[1] = fpsRange.get(position)[max];
-    	    	 	Log.i("fff",selectedFps[0]+"-"+selectedFps[1]);
-    	 // todo
     	    }
 
     	    @Override
@@ -200,7 +158,6 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	    }
 	    for (int j=0;j<fpsRange.size();j++){
 	    	fpsOptions.add(fpsRange.get(j)[min]/1000+"-"+fpsRange.get(j)[max]/1000);
-	    	 Log.i("fps", fpsOptions.get(j));
 	    }
 	    if(camera != null) {
 	    	camera.release();
@@ -225,27 +182,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	  private String getLocalIpAddress() {
-	        try {
-	            for (Enumeration<NetworkInterface> en = NetworkInterface
-	                    .getNetworkInterfaces(); en.hasMoreElements();) {
-	                NetworkInterface intf = en.nextElement();
-	                for (Enumeration<InetAddress> enumIpAddr = intf
-	                        .getInetAddresses(); enumIpAddr.hasMoreElements();) {
-	                    InetAddress inetAddress = enumIpAddr.nextElement();
-	                    if (!inetAddress.isLoopbackAddress()) {
-	                        return inetAddress.getHostAddress().toString();
-	                    }
-	                }
-	            }
-	        } catch (SocketException ex) {
-	            return "ERROR Obtaining IP";
-	        }
-	        return "No IP Available";
-	    }
-	
+		
 		@Override
 	    protected void onPause() {
 			  super.onPause();

@@ -19,7 +19,8 @@ public class WebServerService extends Service {
 
 	//private WebServer server = null;
 	private Server server;
-
+	private Thread t;
+	
 	@Override
 	public void onCreate() {
 		Log.i("HTTPSERVICE", "Creating and starting httpService");
@@ -27,8 +28,11 @@ public class WebServerService extends Service {
 		super.onCreate();
 	//	server = new WebServer(this);
 		//server.startServer();
-//		server = new Server();
-//		server.run();
+		
+		server = new Server();
+		t = new Thread(server);
+		t.start();
+	//	server.run();
 	
 	}
 
@@ -50,5 +54,13 @@ public class WebServerService extends Service {
 		    }
 		  }
 	
+	 @Override
+	 public int onStartCommand(Intent intent, int flags, int startId) {
+		 Log.i("service","sss");
+	   //  handleCommand(intent);
+	     // We want this service to continue running until it is explicitly
+	     // stopped, so return sticky.
+	     return START_STICKY;
+	 }
 	
 }
