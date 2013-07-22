@@ -20,9 +20,9 @@
         android:layout_below="@+id/backButton"
         android:text="How do I connect?" />
    
-    
     <SurfaceView
-    android:id="@+id/surview"    
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" />
+        android:id="@+id/surview"
+        android:layout_width="362dp"
+        android:layout_height="fill_parent" />
+
 </LinearLayout>

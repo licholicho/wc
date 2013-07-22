@@ -32,18 +32,20 @@ public class MainActivity2 extends Activity implements
 
 	boolean inProc = false;
 	final int maxVideoNum = 3;
-	// VideoFrame[] videoFrames = new VideoFrame[maxVideoNum];
 	byte[] preFrame = new byte[1024 * 1024 * 8];
 	int camOrient = 90;
 	private int size[] = new int[2];
 	private int fps[] = new int[2];
-	String port;
+	private String port = "8000";
+	private String password;
 	private CamView cameraView;
 	private Button backButton;
 	private Button connectButton;
 	private OnClickListener backButtonListener;
 	private OnClickListener connectButtonListener;
-	private Server server = new Server();
+	private Server server;
+	private int portNum = 8000;
+	private Thread t;
 	
 	@Override
 	public void onCameraReady() {
@@ -67,9 +69,26 @@ public class MainActivity2 extends Activity implements
 		size = extras.getIntArray("resolution");
 		fps = extras.getIntArray("fps");
 		port = extras.getString("port");
-
+	//	password = extras.getString("password");
+		if(!port.equals("")){
+			portNum = Integer.valueOf(port);
+		}
 		if (camOrient >= 90)
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		else {
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+			
+		}
+		
+	//	if (password.equals("")) {
+			server = new Server(portNum);
+		//} else {
+			//server = new Server(portNum, password);
+		//}
+	//	server = new Server(8000);
+		t = new Thread(server);
+		t.start();
+	//	 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) { camera.setDisplayOrientation(90); }
 		// else
 		// setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -87,16 +106,9 @@ public class MainActivity2 extends Activity implements
 
 		final AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
 		String s = getLocalIpAddress();
-		// set the message to display
-		alertbox.setMessage("Connect to: " + s + ":" + port); // roboczos
-
-		// add a neutral button to the alert box and assign a click listener
+		alertbox.setMessage("Connect to: " + s + ":" + port); 
 		alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-
-			// click listener on the alert box
 			public void onClick(DialogInterface arg0, int arg1) {
-				// the button was clicked
-
 			}
 		});
 		connectButtonListener = new OnClickListener() {
@@ -155,7 +167,7 @@ public class MainActivity2 extends Activity implements
 		SurfaceView cameraSurface = (SurfaceView) findViewById(R.id.surview);
 		cameraView = new CamView(cameraSurface, camOrient, fps, size, previewCb);
 		if (cameraView != null)
-			Log.i("null", "null init");
+			Log.i("null", "o"+camOrient);
 		cameraView.setCameraReadyCallback(this);
 		// previewFormat = cameraView.getPreviewFormat();
 		// cameraView.stopPreview();
@@ -218,8 +230,7 @@ public class MainActivity2 extends Activity implements
 	    notificationManager.notify(0, notification);
 	  }
 	
-	public void appExit()
-	{
+	public void appExit() {
 		Log.i("app","exit");
 	    this.finish();
 	    Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -228,4 +239,8 @@ public class MainActivity2 extends Activity implements
 	    startActivity(intent);
 	}
 	
+	
+/*	public boolean checkPort(String s){
+		return s.matches("[");
+	}*/
 }

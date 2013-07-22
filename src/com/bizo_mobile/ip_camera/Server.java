@@ -21,7 +21,7 @@ public class Server implements Runnable {
 	private int maxThreads = 10;
 	private boolean stopped = false;
 	static ConcurrentLinkedQueue<ByteArrayOutputStream> photos = new ConcurrentLinkedQueue<ByteArrayOutputStream>();
-
+	private String password;
 	// public static void main(String args[]) throws InterruptedException {
 	// Thread serverThread = new Thread(new Server());
 	// serverThread.start();
@@ -34,6 +34,16 @@ public class Server implements Runnable {
 
 	public Server() {
 
+	}
+	
+	public Server(int port) {
+		this.port = port;
+		this.password = "";
+	}
+	
+	public Server(int port, String password) {
+		this.port = port;
+		this.password = password;
 	}
 
 	public void addPhoto(ByteArrayOutputStream out) {
@@ -55,6 +65,10 @@ public class Server implements Runnable {
 		executor = Executors.newFixedThreadPool(maxThreads);
 		while (!isStopped()) {
 			try {
+				if (!password.equals("")){
+					
+				}
+				// popros o haslo
 				Socket clientSocket = ss.accept();
 				executor.execute(new ThreadHandler(clientSocket));
 			} catch (IOException e) {

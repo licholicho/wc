@@ -4,14 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+  <TextView
+        android:id="@+id/resolution"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:text="Resolution"
+        />   
     
-
-    <Button
-        android:id="@+id/web_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start" />
-
  <Spinner
     android:id="@+id/resolution_spinner"
     android:layout_width="fill_parent"
@@ -19,39 +18,66 @@
     
     />
  
-
-    <Spinner android:id="@+id/fps_spinner"
+   <TextView
+        android:id="@+id/fps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:text="FPS Limit"
+        />  
+ 
+    <Spinner
+        android:id="@+id/fps_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:drawSelectorOnTop="true"/>
+        android:layout_gravity="center"
+        android:drawSelectorOnTop="true" />
     
     <TextView
         android:id="@+id/orientation"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-           
-        />
+        android:text="Orientation" />
+
      <Spinner android:id="@+id/orientation_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:drawSelectorOnTop="true"/>
 
+     <TextView
+        android:id="@+id/port"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Port" />
+     
      <EditText
-         android:id="@+id/port"
+         android:id="@+id/portsel"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:ems="10"
-         android:inputType="text"
-         android:text="8000"
+         android:inputType="numberDecimal"
+         android:digits="0123456789"
+         android:maxLength="6"
           >
 
      </EditText>
 
+     <TextView
+        android:id="@+id/password"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Password" />
+          
      <EditText
          android:id="@+id/editText2"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          android:ems="10"
          android:inputType="textPassword" />
+
+     <Button
+         android:id="@+id/web_button"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:text="Start" />
 
 </LinearLayout>

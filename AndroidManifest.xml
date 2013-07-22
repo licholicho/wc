@@ -32,6 +32,7 @@
             android:name="com.bizo_mobile.ip_camera.MainActivity2"
             android:label="@string/app_name" >
         </activity>
+    
 
         <service
             android:name="trash.WebServerService"
@@ -41,7 +42,6 @@
         <activity
             android:name="com.bizo_mobile.ip_camera.ServerTest"
             android:label="@string/title_activity_server_test" >
-            
         </activity>
     </application>
 

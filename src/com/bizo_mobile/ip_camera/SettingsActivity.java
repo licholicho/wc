@@ -1,15 +1,12 @@
 package com.bizo_mobile.ip_camera;
 
 
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 
-import trash.WebServerService;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
@@ -40,7 +37,12 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	private List<String> fpsOptions = new ArrayList<String>();
 	private int[] selectedFps = new int[2];
 	//private WebServerService s;
+//	final AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
 	private EditText port;
+	private String portNumber;
+	
+	private EditText password;
+	private String pass;
 	private int min, max;
 	
 	@Override
@@ -49,18 +51,27 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.settings_layout);
         initialize();
-        port = (EditText)findViewById(R.id.port);
-        final String portNumber = port.getText().toString();
+        port = (EditText)findViewById(R.id.portsel);
+     //   password = (EditText)findViewById(R.id.password);
+      
+     /*   alertbox.setMessage("Wrong port!"); 
+		alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface arg0, int arg1) {
+			}
+		});*/
+        
         webButton = (Button) findViewById(R.id.web_button);
         webListener = new OnClickListener() {
 		    public void onClick(View view) {
-		       
+		    	 portNumber = port.getText().toString();
+			  //  	 pass = password.getText().toString();
 		    	Intent intent = new Intent();
 		    	intent.setClass(view.getContext(),MainActivity2.class);
 		    	intent.putExtra("orientation", orientation);
 		    	intent.putExtra("resolution", selectedSize);
 		    	intent.putExtra("fps",selectedFps);
 		    	intent.putExtra("port", portNumber);
+		    	intent.putExtra("password", pass);
 		    	startActivity(intent);
 		    }
         };
@@ -75,14 +86,12 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
         	    @Override
         	    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) 
         	    {
-        	    	selectedOrientation.setText(orientationOptions[position]);
         	    	if(position==0) orientation = 90;
         	    	else orientation = 0;
         	    }
 
         	    @Override
         	    public void onNothingSelected(AdapterView<?> parentView) {
-        	    	selectedOrientation.setText("");
         	    }
         	});
         ArrayAdapter aa=new ArrayAdapter(this, android.R.layout.simple_spinner_item,orientationOptions);
@@ -157,7 +166,13 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	        resolutionOptions.add(res);
 	    }
 	    for (int j=0;j<fpsRange.size();j++){
-	    	fpsOptions.add(fpsRange.get(j)[min]/1000+"-"+fpsRange.get(j)[max]/1000);
+	    	//fpsOptions.add(fpsRange.get(j)[min]/1000+"-"+fpsRange.get(j)[max]/1000);
+	    	String s = fpsRange.get(j)[max]/1000+"";
+	    	if (!fpsOptions.contains(s)) {
+	    		fpsOptions.add(s);
+	    	}
+
+	    	
 	    }
 	    if(camera != null) {
 	    	camera.release();
@@ -206,7 +221,10 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 			    }
 		}
 
-	
+		public boolean checkPort(){
+			portNumber = port.getText().toString();
+			return portNumber.matches("[6-9][0-9]{3,4}");
+		}
 		  
 		  
 
