@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
@@ -14,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -29,7 +28,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	private OnClickListener webListener;
 	private TextView selectedOrientation;
 	private int orientation;
-	private static final String[] orientationOptions = {"portrait","landscape"};	
+	private static final String[] orientationOptions = {"Portrait","Landscape"};	
 	private List<Camera.Size> supportedSizes;
 	private List<String> resolutionOptions = new ArrayList<String>();
 	private int[] selectedSize = new int[2];
@@ -52,8 +51,22 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
         setContentView(R.layout.settings_layout);
         initialize();
         port = (EditText)findViewById(R.id.portsel);
-     //   password = (EditText)findViewById(R.id.password);
+        password = (EditText)findViewById(R.id.pass);
       
+        port.setOnFocusChangeListener(new OnFocusChangeListener(){
+			@Override
+			public void onFocusChange(View arg0, boolean arg1) {
+				port.setHint("Enter 3-6 digits");
+			}
+        	});
+        
+        password.setOnFocusChangeListener(new OnFocusChangeListener(){
+			@Override
+			public void onFocusChange(View arg0, boolean arg1) {
+				password.setHint("Leave blank if anyone can access");
+			}
+        	});
+        
      /*   alertbox.setMessage("Wrong port!"); 
 		alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface arg0, int arg1) {
@@ -64,7 +77,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
         webListener = new OnClickListener() {
 		    public void onClick(View view) {
 		    	 portNumber = port.getText().toString();
-			  //  	 pass = password.getText().toString();
+			   	 pass = password.getText().toString();
 		    	Intent intent = new Intent();
 		    	intent.setClass(view.getContext(),MainActivity2.class);
 		    	intent.putExtra("orientation", orientation);
@@ -140,6 +153,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
         ArrayAdapter aa2=new ArrayAdapter(this, android.R.layout.simple_spinner_item,resolutionOptions);
         aa2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         resSpin.setAdapter(aa2);
+        
         
     
         
@@ -221,12 +235,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 			    }
 		}
 
-		public boolean checkPort(){
-			portNumber = port.getText().toString();
-			return portNumber.matches("[6-9][0-9]{3,4}");
-		}
-		  
-		  
+			  
 
 	  
 	  

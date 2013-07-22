@@ -31,13 +31,13 @@ public final class R {
         public static final int button2=0x7f080014;
         public static final int button3=0x7f080015;
         public static final int connect_button=0x7f080005;
-        public static final int editText2=0x7f080012;
         public static final int fps=0x7f08000b;
         public static final int fps_spinner=0x7f08000c;
         public static final int howButton=0x7f080007;
         public static final int imageView1=0x7f080003;
         public static final int orientation=0x7f08000d;
         public static final int orientation_spinner=0x7f08000e;
+        public static final int pass=0x7f080012;
         public static final int password=0x7f080011;
         public static final int port=0x7f08000f;
         public static final int portsel=0x7f080010;

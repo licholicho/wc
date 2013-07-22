@@ -137,7 +137,6 @@ public class CamView implements SurfaceHolder.Callback {
 		procSize.height = size[1];
 		p.setPreviewFpsRange(fps[0],fps[1]);
 		camera.setParameters(p);
-		Log.i("sss","res:"+procSize.width+" "+procSize.height+" fps:"+fps[0]+"-"+fps[1]);
 		camera.setDisplayOrientation(orientation);
 		camera.setPreviewCallback(pvcb);
 		try {

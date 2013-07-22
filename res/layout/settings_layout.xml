@@ -53,7 +53,7 @@
          android:id="@+id/portsel"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:ems="10"
+         android:ems="7"
          android:inputType="numberDecimal"
          android:digits="0123456789"
          android:maxLength="6"
@@ -68,10 +68,10 @@
         android:text="Password" />
           
      <EditText
-         android:id="@+id/editText2"
+         android:id="@+id/pass"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:ems="10"
+         android:ems="7"
          android:inputType="textPassword" />
 
      <Button

@@ -69,10 +69,11 @@ public class MainActivity2 extends Activity implements
 		size = extras.getIntArray("resolution");
 		fps = extras.getIntArray("fps");
 		port = extras.getString("port");
-	//	password = extras.getString("password");
+		password = extras.getString("password");
 		if(!port.equals("")){
 			portNum = Integer.valueOf(port);
 		}
+	
 		if (camOrient >= 90)
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		else {
@@ -80,14 +81,16 @@ public class MainActivity2 extends Activity implements
 			
 		}
 		
-	//	if (password.equals("")) {
+		if (password.equals("")) {
 			server = new Server(portNum);
-		//} else {
-			//server = new Server(portNum, password);
-		//}
+		} else {
+			server = new Server(portNum, password);
+		}
+			Log.i("password","pass: "+password);
+			t = new Thread(server);
+		
 	//	server = new Server(8000);
-		t = new Thread(server);
-		t.start();
+	//**	
 	//	 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) { camera.setDisplayOrientation(90); }
 		// else
 		// setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -109,11 +112,14 @@ public class MainActivity2 extends Activity implements
 		alertbox.setMessage("Connect to: " + s + ":" + port); 
 		alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface arg0, int arg1) {
+				
 			}
 		});
 		connectButtonListener = new OnClickListener() {
 			public void onClick(View view) {
 				alertbox.show();
+				if(!t.isAlive()) t.start();
+				
 			}
 		};
 		connectButton.setOnClickListener(connectButtonListener);
@@ -167,8 +173,8 @@ public class MainActivity2 extends Activity implements
 		SurfaceView cameraSurface = (SurfaceView) findViewById(R.id.surview);
 		cameraView = new CamView(cameraSurface, camOrient, fps, size, previewCb);
 		if (cameraView != null)
-			Log.i("null", "o"+camOrient);
 		cameraView.setCameraReadyCallback(this);
+		
 		// previewFormat = cameraView.getPreviewFormat();
 		// cameraView.stopPreview();
 		// cameraView.startPreview();
@@ -197,7 +203,6 @@ public class MainActivity2 extends Activity implements
 		public void onPreviewFrame(byte[] frame, Camera c) {
 			if (!inProc) {
 				inProc = true;
-				Log.i("onpreviewframe", "STart!");
 				int picWidth = size[0];// cameraView.getWidth();
 				int picHeight = size[1];// cameraView.getHeight();
 				YuvImage image = new YuvImage(frame,
