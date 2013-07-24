@@ -120,15 +120,6 @@ public class CamView implements SurfaceHolder.Callback {
 	}
 	
 	private void setupCam() {
-		/******************/
-		/*camera = Camera.open();
-		procSize = camera.new Size(0,0);
-		Camera.Parameters p = camera.getParameters();
-		supportedSizes = p.getSupportedPreviewSizes();
-		procSize = supportedSizes.get(supportedSizes.size()/2);
-		p.setPreviewSize(procSize.width, procSize.height);
-		*/
-		/******************/
 		if(camera == null)
 		camera = Camera.open();
 		procSize = camera.new Size(0,0);

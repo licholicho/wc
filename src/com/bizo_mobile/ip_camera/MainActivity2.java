@@ -31,12 +31,10 @@ public class MainActivity2 extends Activity implements
 		CamView.CameraReadyCallback {
 
 	boolean inProc = false;
-	final int maxVideoNum = 3;
-	byte[] preFrame = new byte[1024 * 1024 * 8];
 	int camOrient = 90;
 	private int size[] = new int[2];
 	private int fps[] = new int[2];
-	private String port = "8000";
+	private String port;
 	private String password;
 	private CamView cameraView;
 	private Button backButton;
@@ -46,6 +44,7 @@ public class MainActivity2 extends Activity implements
 	private Server server;
 	private int portNum = 8000;
 	private Thread t;
+	private ByteArrayOutputStream output_stream;
 	
 	@Override
 	public void onCameraReady() {
@@ -72,6 +71,8 @@ public class MainActivity2 extends Activity implements
 		password = extras.getString("password");
 		if(!port.equals("")){
 			portNum = Integer.valueOf(port);
+		} else {
+			port = "8000";
 		}
 	
 		if (camOrient >= 90)
@@ -208,7 +209,7 @@ public class MainActivity2 extends Activity implements
 				YuvImage image = new YuvImage(frame,
 						cameraView.getPreviewFormat(), picWidth, picHeight,
 						null);
-				ByteArrayOutputStream output_stream = new ByteArrayOutputStream();
+				output_stream = new ByteArrayOutputStream();
 				image.compressToJpeg(new Rect(0, 0, picWidth, picHeight), 90,
 						output_stream);
 				server.addPhoto(output_stream);

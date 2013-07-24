@@ -8,7 +8,7 @@
         android:id="@+id/resolution"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
-        android:text="Resolution"
+        android:text="@string/resolution"
         />   
     
  <Spinner
@@ -22,7 +22,7 @@
         android:id="@+id/fps"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 
-        android:text="FPS Limit"
+        android:text="@string/fpslimit"
         />  
  
     <Spinner
@@ -36,7 +36,7 @@
         android:id="@+id/orientation"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Orientation" />
+        android:text="@string/orientation" />
 
      <Spinner android:id="@+id/orientation_spinner"
         android:layout_width="fill_parent"
@@ -47,7 +47,7 @@
         android:id="@+id/port"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Port" />
+        android:text="@string/port" />
      
      <EditText
          android:id="@+id/portsel"
@@ -65,7 +65,7 @@
         android:id="@+id/password"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Password" />
+        android:text="@string/password" />
           
      <EditText
          android:id="@+id/pass"
@@ -78,6 +78,6 @@
          android:id="@+id/web_button"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
-         android:text="Start" />
+         android:text="@string/start" />
 
 </LinearLayout>

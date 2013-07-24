@@ -50,6 +50,7 @@ public class Server implements Runnable {
 		photos.add(out);
 		try {
 			Thread.sleep(50);
+			photos.remove(out);//*****//
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

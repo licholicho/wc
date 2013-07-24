@@ -24,8 +24,8 @@ import android.widget.TextView;
 public class SettingsActivity extends Activity implements OnItemSelectedListener {
 
 	private Camera camera = null;
-	private Button webButton;
-	private OnClickListener webListener;
+	private Button startButton;
+	private OnClickListener startListener;
 	private TextView selectedOrientation;
 	private int orientation;
 	private static final String[] orientationOptions = {"Portrait","Landscape"};	
@@ -35,11 +35,8 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	private List<int[]> fpsRange;
 	private List<String> fpsOptions = new ArrayList<String>();
 	private int[] selectedFps = new int[2];
-	//private WebServerService s;
-//	final AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
 	private EditText port;
 	private String portNumber;
-	
 	private EditText password;
 	private String pass;
 	private int min, max;
@@ -67,14 +64,8 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 			}
         	});
         
-     /*   alertbox.setMessage("Wrong port!"); 
-		alertbox.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface arg0, int arg1) {
-			}
-		});*/
-        
-        webButton = (Button) findViewById(R.id.web_button);
-        webListener = new OnClickListener() {
+        startButton = (Button) findViewById(R.id.web_button);
+        startListener = new OnClickListener() {
 		    public void onClick(View view) {
 		    	 portNumber = port.getText().toString();
 			   	 pass = password.getText().toString();
@@ -88,11 +79,9 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 		    	startActivity(intent);
 		    }
         };
-        webButton.setOnClickListener(webListener);
+        startButton.setOnClickListener(startListener);
         
         selectedOrientation=(TextView)findViewById(R.id.orientation);
-       
-  
         Spinner orientSpin=(Spinner)findViewById(R.id.orientation_spinner);
         orientSpin.setOnItemSelectedListener(new OnItemSelectedListener() 
         {
@@ -107,9 +96,9 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
         	    public void onNothingSelected(AdapterView<?> parentView) {
         	    }
         	});
-        ArrayAdapter aa=new ArrayAdapter(this, android.R.layout.simple_spinner_item,orientationOptions);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        orientSpin.setAdapter(aa);
+        ArrayAdapter<String> orientationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,orientationOptions);
+        orientationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        orientSpin.setAdapter(orientationAdapter);
       
         /****************************/
         
@@ -128,9 +117,9 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
     	    //
     	    }
     	});
-        ArrayAdapter aa3=new ArrayAdapter(this, android.R.layout.simple_spinner_item,fpsOptions);
-        aa3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        fpsSpin.setAdapter(aa3);
+        ArrayAdapter fpsAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item,fpsOptions);
+        fpsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        fpsSpin.setAdapter(fpsAdapter);
         
         /************************************/
         

@@ -5,9 +5,14 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_server_test">ServerTest</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="fpslimit">FPS Limit</string>
     <string name="orientation">Orientation</string>
     <string name="resolution">Resolution</string>
-    <string name="fps">FPS Limit</string>
-    <string name="title_activity_test">TestActivity</string>
+    <string name="password">Password</string>
+    <string name="port">Port</string>
+    <string name="start">Start</string>
+    <string name="bg">Run in background</string>
+    <string name="connect">How do I connect?</string>
 
 </resources>

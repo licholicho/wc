@@ -1,10 +1,16 @@
-package com.bizo_mobile.ip_camera;
+package trash;
 
 import java.io.ByteArrayOutputStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+
+import com.bizo_mobile.ip_camera.R;
+import com.bizo_mobile.ip_camera.Server;
+import com.bizo_mobile.ip_camera.R.id;
+import com.bizo_mobile.ip_camera.R.layout;
+import com.bizo_mobile.ip_camera.R.menu;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,7 +29,7 @@ public class ServerTest extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_server_test);
+	/*	setContentView(R.layout.activity_server_test);
 		this.imageView = (ImageView) this.findViewById(R.id.imageView1);
 		Button photoButton = (Button) this.findViewById(R.id.button1);
 		String s = getLocalIpAddress();
@@ -36,7 +42,7 @@ public class ServerTest extends Activity {
 						android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 				startActivityForResult(cameraIntent, CAMERA_REQUEST);
 			}
-		});
+		});*/
 	}
 
 	@Override

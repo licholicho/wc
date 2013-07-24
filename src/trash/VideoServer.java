@@ -40,7 +40,7 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vid_layout);
+      /*  setContentView(R.layout.vid_layout);
 
         start = (Button)findViewById(R.id.button1);
         start.setOnClickListener(new Button.OnClickListener()
@@ -74,7 +74,7 @@ public class VideoServer extends Activity implements SurfaceHolder.Callback {
             public void onPictureTaken(byte[] data, Camera camera) {
                 Log.d("Log", "onPictureTaken - raw");
             }
-        };
+        };*/
 
         /** Handles data for jpeg picture */
         shutterCallback = new ShutterCallback() {

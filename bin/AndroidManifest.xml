@@ -40,7 +40,7 @@
         </service>
 
         <activity
-            android:name="com.bizo_mobile.ip_camera.ServerTest"
+            android:name="trash.ServerTest"
             android:label="@string/title_activity_server_test" >
         </activity>
     </application>

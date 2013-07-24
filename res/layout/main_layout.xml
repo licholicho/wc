@@ -4,21 +4,30 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
   
-  <Button
+    <LinearLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:weightSum="1">
+         <Button
         android:id="@+id/backButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-      
-        android:layout_marginTop="16dp"
-        android:text="Run in background" />
+        android:layout_marginTop="0dp"
+        android:text="@string/bg" 
+        android:layout_weight="0.5"
+        />
 
     <Button
         android:id="@+id/howButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/backButton"
-        android:layout_below="@+id/backButton"
-        android:text="How do I connect?" />
+        android:layout_marginTop="0dp"
+        android:text="@string/connect"
+        android:layout_weight="0.5"
+         />
+    </LinearLayout>
+ 
    
     <SurfaceView
         android:id="@+id/surview"

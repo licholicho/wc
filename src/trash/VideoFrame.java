@@ -1,7 +1,8 @@
 package trash;
 
-import android.util.Log;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class VideoFrame extends OutputStream {
     private byte[] buffer;
