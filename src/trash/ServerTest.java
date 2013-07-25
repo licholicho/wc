@@ -7,10 +7,10 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 import com.bizo_mobile.ip_camera.R;
-import com.bizo_mobile.ip_camera.Server;
 import com.bizo_mobile.ip_camera.R.id;
 import com.bizo_mobile.ip_camera.R.layout;
 import com.bizo_mobile.ip_camera.R.menu;
+import com.bizo_mobile.server.thread.ThreadServer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -53,14 +53,14 @@ public class ServerTest extends Activity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
-			Bitmap photo = (Bitmap) data.getExtras().get("data");
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			photo.compress(Bitmap.CompressFormat.JPEG, 20, out);
-			Thread server = new Thread(new Server(out));
-			imageView.setImageBitmap(photo);
-			server.start();
-		}
+//		if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+//			Bitmap photo = (Bitmap) data.getExtras().get("data");
+//			ByteArrayOutputStream out = new ByteArrayOutputStream();
+//			photo.compress(Bitmap.CompressFormat.JPEG, 20, out);
+//			Thread server = new Thread(new ThreadServer(out));
+//			imageView.setImageBitmap(photo);
+//			server.start();
+//		}
 	}
 
 	

@@ -6,7 +6,9 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-import trash.WebServerService;
+import com.bizo_mobile.server.thread.ImageContainer;
+import com.bizo_mobile.server.thread.ThreadServer;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -41,10 +43,13 @@ public class MainActivity2 extends Activity implements
 	private Button connectButton;
 	private OnClickListener backButtonListener;
 	private OnClickListener connectButtonListener;
-	private Server server;
+	private ThreadServer server;
 	private int portNum = 8000;
 	private Thread t;
 	private ByteArrayOutputStream output_stream;
+	
+	////Piotr Kowenzowski
+	private ImageContainer imageContainer;
 	
 	@Override
 	public void onCameraReady() {
@@ -75,6 +80,8 @@ public class MainActivity2 extends Activity implements
 			port = "8000";
 		}
 	
+		imageContainer = new ImageContainer();
+		
 		if (camOrient >= 90)
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		else {
@@ -83,9 +90,9 @@ public class MainActivity2 extends Activity implements
 		}
 		
 		if (password.equals("")) {
-			server = new Server(portNum);
+			server = new ThreadServer(imageContainer, 8000, "");
 		} else {
-			server = new Server(portNum, password);
+			//server = new ThreadServer(portNum, password);
 		}
 			Log.i("password","pass: "+password);
 			t = new Thread(server);
@@ -126,6 +133,8 @@ public class MainActivity2 extends Activity implements
 		connectButton.setOnClickListener(connectButtonListener);
 		initCamera();
 		startService(new Intent(this, WebServerService.class));
+		
+		
 	}
 
 	@Override
@@ -212,7 +221,7 @@ public class MainActivity2 extends Activity implements
 				output_stream = new ByteArrayOutputStream();
 				image.compressToJpeg(new Rect(0, 0, picWidth, picHeight), 90,
 						output_stream);
-				server.addPhoto(output_stream);
+				imageContainer.addPhoto(output_stream);
 				inProc = false;
 			}
 		}

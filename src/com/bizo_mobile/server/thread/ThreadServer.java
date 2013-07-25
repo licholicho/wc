@@ -1,4 +1,4 @@
-package com.bizo_mobile.ip_camera;
+package com.bizo_mobile.server.thread;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -14,68 +14,70 @@ import java.util.concurrent.Executors;
 
 import android.util.Log;
 
-public class Server implements Runnable {
+import com.bizo_mobile.server.IServer;
+
+public class ThreadServer implements Runnable {
 	private ServerSocket ss;
 	private int port = 8000;
 	private ExecutorService executor;
 	private int maxThreads = 10;
 	private boolean stopped = false;
-	static ConcurrentLinkedQueue<ByteArrayOutputStream> photos = new ConcurrentLinkedQueue<ByteArrayOutputStream>();
 	private String password;
+	private ImageContainer imageContainer;
+
 	// public static void main(String args[]) throws InterruptedException {
 	// Thread serverThread = new Thread(new Server());
 	// serverThread.start();
 	// serverThread.join();
 	// }
-
-	public Server(ByteArrayOutputStream out) {
-		addPhoto(out);
+	public ThreadServer(ImageContainer imageContainer, int port, String password) {
+		this.imageContainer = imageContainer;
 	}
 
-	public Server() {
-
+	public ImageContainer getImageContainer() {
+		return imageContainer;
 	}
-	
-	public Server(int port) {
+
+	public void setImageContainer(ImageContainer imageContainer) {
+		this.imageContainer = imageContainer;
+	}
+
+	public ThreadServer(int port) {
 		this.port = port;
 		this.password = "";
 	}
-	
-	public Server(int port, String password) {
-		this.port = port;
-		this.password = password;
-	}
 
-	public void addPhoto(ByteArrayOutputStream out) {
-		photos.add(out);
-		try {
-			Thread.sleep(50);
-			photos.remove(out);//*****//
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+//	public ThreadServer(int port, String password) {
+//		this.port = port;
+//		this.password = password;
+//	}
 
 	@Override
 	public void run() {
+		final int TIME_TO_FULL = 100;
+		while (!imageContainer.isFull()) {
+			try {
+				Thread.sleep(TIME_TO_FULL);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		try {
 			ss = new ServerSocket(port);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		Log.i(ThreadServer.class.getName(), "Server started on port " + port + " on ip: " + " ");
 		executor = Executors.newFixedThreadPool(maxThreads);
 		while (!isStopped()) {
 			try {
-				if (!password.equals("")){
-					
-				}
-				// popros o haslo
 				Socket clientSocket = ss.accept();
-				executor.execute(new ThreadHandler(clientSocket));
+				executor.execute(new ThreadHandler(clientSocket, this));
+				Log.i(ThreadServer.class.getName(), "Client connected from: " + clientSocket.getInetAddress().toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 		}
 	}
 
@@ -89,10 +91,12 @@ class ThreadHandler implements Runnable {
 	private DataInputStream in;
 	private DataOutputStream out;
 	private static final String BOUNDARY = "arflebarfle";
-	private Iterator<ByteArrayOutputStream> iterator = Server.photos.iterator();
+	private static final int TIME_TO_NEXT = 25;
+	private ThreadServer server;
 
-	ThreadHandler(Socket clientSocket) {
+	ThreadHandler(Socket clientSocket, ThreadServer server) {
 		this.client = clientSocket;
+		this.server = server;
 	}
 
 	@Override
@@ -113,26 +117,19 @@ class ThreadHandler implements Runnable {
 		try {
 			sendWelcomeMsg();
 			while (true) {
-				while (iterator.hasNext()) {
-					out.writeBytes("Content-type: image/jpg\n\n");
-					iterator.next().writeTo(out);
-					iterator.remove();
-					out.writeBytes("--" + BOUNDARY + "\n");
-					out.flush();
-				}
-				iterator = Server.photos.iterator();
+				out.writeBytes("Content-type: image/jpg\n\n");
+				server.getImageContainer().getPhoto().writeTo(out);
+				out.writeBytes("--" + BOUNDARY + "\n");
+				out.flush();
 				try {
-					Thread.sleep(50);
+					Thread.sleep(TIME_TO_NEXT);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				Log.i("protos", "size" + Server.photos.size());
-			}
+			}			
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
-
 	}
 
 	private void sendWelcomeMsg() throws IOException {
@@ -142,7 +139,6 @@ class ThreadHandler implements Runnable {
 				+ BOUNDARY + "\r\n");
 		out.writeBytes("\r\n");
 		out.writeBytes("--" + BOUNDARY + "\n");
-
 	}
 
 }
