@@ -232,7 +232,6 @@ public class MainActivity2 extends Activity implements
 		Log.i("notification","notification");
 	    Intent intent = new Intent(this, SettingsActivity.class);
 	    PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
 	    Notification notification = new NotificationCompat.Builder(this)
 	        .setContentTitle("Camera IP")
 	        .setContentText("Subject").setSmallIcon(R.drawable.ic_launcher)
