@@ -5,14 +5,10 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-<<<<<<< HEAD
-import trash.WebServerService;
-=======
 
 import com.bizo_mobile.server.thread.ImageContainer;
 import com.bizo_mobile.server.thread.ThreadServer;
 
->>>>>>> 97929615b09b99c403549ccc79d3632aeba7c066
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -239,10 +235,10 @@ public class MainActivity2 extends Activity implements
 	    Notification notification = new NotificationCompat.Builder(this)
 	        .setContentTitle("Camera IP")
 	        .setContentText("Subject").setSmallIcon(R.drawable.ic_launcher)
-	        .setContentIntent(pIntent).build();
-	       /* .addAction(R.drawable.ic_launcher, "Call", pIntent)
+	        .setContentIntent(pIntent)
+	        .addAction(R.drawable.ic_launcher, "Call", pIntent)
 	        .addAction(R.drawable.ic_launcher, "More", pIntent)
-	        .addAction(R.drawable.ic_launcher, "And more", pIntent).build();*/
+	        .addAction(R.drawable.ic_launcher, "And more", pIntent).build();
 	    NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 	    notification.flags |= Notification.FLAG_AUTO_CANCEL;
 	    notificationManager.notify(0, notification);
@@ -250,15 +246,13 @@ public class MainActivity2 extends Activity implements
 	
 	public void appExit() {
 		Log.i("app","exit");
-	   
+	    this.finish();
 	    Intent intent = new Intent(Intent.ACTION_MAIN);
 	    intent.addCategory(Intent.CATEGORY_HOME);
 	    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	    startActivity(intent);
-	    this.finish();
 	}
 	
-
 	
 /*	public boolean checkPort(String s){
 		return s.matches("[");
