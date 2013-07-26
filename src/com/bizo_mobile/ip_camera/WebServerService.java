@@ -1,4 +1,6 @@
-package trash;
+package com.bizo_mobile.ip_camera;
+
+import com.bizo_mobile.server.thread.ThreadServer;
 
 import android.app.Service;
 import android.content.Intent;
@@ -6,11 +8,10 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.bizo_mobile.ip_camera.Server;
 
 public class WebServerService extends Service {
 
-	private Server server;
+	private ThreadServer server;
 	private Thread t;
 	
 	@Override
