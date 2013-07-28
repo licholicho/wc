@@ -1,0 +1,108 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (javaClasses.cpp:129), pid=2500, tid=68
+#  fatal error: Invalid layout of preloaded class
+#
+# JRE version: 7.0_25-b17
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (23.25-b01 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000000000221e000):  JavaThread "Unknown thread" [_thread_in_vm, id=68, stack(0x0000000002290000,0x0000000002390000)]
+
+Stack: [0x0000000002290000,0x0000000002390000]
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x000000000221e000 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=68, stack(0x0000000002290000,0x0000000002390000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 0.009 loading class 0x00000000023e1ef0 done
+Event: 0.009 loading class 0x00000000023a4000 done
+Event: 0.009 loading class 0x00000000023a45d0
+Event: 0.010 loading class 0x000000000b6e2550
+Event: 0.010 loading class 0x000000000b6e2550 done
+Event: 0.010 loading class 0x000000000b6e1b90
+Event: 0.010 loading class 0x000000000b6e1b90 done
+Event: 0.010 loading class 0x000000000b6e0ff0
+Event: 0.010 loading class 0x000000000b6e0ff0 done
+Event: 0.010 loading class 0x00000000023a45d0 done
+
+
+Dynamic libraries:
+0x000007f7c1130000 - 0x000007f7c1163000 	C:\Program Files\Java\jre7\bin\javaw.exe
+0x000007f85cff0000 - 0x000007f85d1b0000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00000000563b0000 - 0x00000000563fd000 	C:\Program Files\AVAST Software\Avast\snxhk64.dll
+0x000007f85a540000 - 0x000007f85a676000 	C:\Windows\system32\KERNEL32.dll
+0x000007f85a000000 - 0x000007f85a0f3000 	C:\Windows\system32\KERNELBASE.dll
+0x000007f85cc60000 - 0x000007f85cd3e000 	C:\Windows\system32\ADVAPI32.dll
+0x000007f85a3f0000 - 0x000007f85a53c000 	C:\Windows\system32\USER32.dll
+0x000007f857930000 - 0x000007f857b9a000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.9200.16579_none_418ab7ef718b27ef\COMCTL32.dll
+0x000007f85ca60000 - 0x000007f85cb05000 	C:\Windows\system32\msvcrt.dll
+0x000007f85a910000 - 0x000007f85a958000 	C:\Windows\SYSTEM32\sechost.dll
+0x000007f85a960000 - 0x000007f85aaa0000 	C:\Windows\system32\RPCRT4.dll
+0x000007f85cb10000 - 0x000007f85cc51000 	C:\Windows\system32\GDI32.dll
+0x000007f85ad30000 - 0x000007f85ad69000 	C:\Windows\system32\IMM32.DLL
+0x000007f85ad70000 - 0x000007f85ae85000 	C:\Windows\system32\MSCTF.dll
+0x0000000055da0000 - 0x0000000055e71000 	C:\Program Files\Java\jre7\bin\msvcr100.dll
+0x0000000055690000 - 0x0000000055d9f000 	C:\Program Files\Java\jre7\bin\server\jvm.dll
+0x000007f84b070000 - 0x000007f84b079000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x000007f851be0000 - 0x000007f851c00000 	C:\Windows\SYSTEM32\WINMM.dll
+0x000007f85a720000 - 0x000007f85a727000 	C:\Windows\system32\PSAPI.DLL
+0x000007f85b4a0000 - 0x000007f85b4f8000 	C:\Windows\system32\WS2_32.dll
+0x000007f851ba0000 - 0x000007f851bd2000 	C:\Windows\SYSTEM32\WINMMBASE.dll
+0x000007f85c8e0000 - 0x000007f85c8e9000 	C:\Windows\system32\NSI.dll
+0x0000000055680000 - 0x000000005568f000 	C:\Program Files\Java\jre7\bin\verify.dll
+0x0000000055650000 - 0x0000000055678000 	C:\Program Files\Java\jre7\bin\java.dll
+0x0000000055630000 - 0x0000000055645000 	C:\Program Files\Java\jre7\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1250 -Xbootclasspath:C:\Users\sacherus\Desktop\EclipseAndroid\sdk\platforms\android-17\android.jar 
+java_command: com.bizo_mobile.server.thread.ThreadServer
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jre7
+PATH=C:\Users\sacherus\Documents\AMD APP\bin\x86_64;C:\Users\sacherus\Documents\AMD APP\bin\x86;C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\AMD APP\bin\x86_64;C:\Program Files (x86)\AMD APP\bin\x86;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\VXIPNP\WinNT\Bin;C:\Program Files (x86)\leJOS NXJ\bin;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\2.0\bin\x64;C:\Program Files (x86)\Microsoft Office\Office12;C:\Program Files (x86)\Git\cmd;C:\Program Files (x86)\Git\bin;C:\Program Files (x86)\sbt\;C:\Users\sacherus\AppData\Roaming\Python\Scripts;C:\Program Files\Java\jre7\bin;C:\Program Files\maven\bin;C:\Program Files\Oracle\VirtualBox
+USERNAME=sacherus
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 42 Stepping 7, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 8 , 64 bit Build 9200 
+
+CPU:total 8 (4 cores per cpu, 2 threads per core) family 6 model 42 stepping 7, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, ht, tsc, tscinvbit
+
+Memory: 4k page, physical 8321388k(5102240k free), swap 12577132k(8616400k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (23.25-b01) for windows-amd64 JRE (1.7.0_25-b17), built on Jun 21 2013 12:58:32 by "java_re" with unknown MS VC++:1600
+
+time: Sun Jul 28 13:57:13 2013
+elapsed time: 0 seconds
+

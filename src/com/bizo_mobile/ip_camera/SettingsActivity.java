@@ -40,6 +40,7 @@ public class SettingsActivity extends Activity implements OnItemSelectedListener
 	private EditText password;
 	private String pass;
 	private int min, max;
+	//private 
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {

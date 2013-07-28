@@ -5,13 +5,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class ImageContainer {
-	private ConcurrentLinkedQueue<ByteArrayOutputStream> photos;
+public class ImageContainer implements IImageContainer {
+	private BlockingQueue<ByteArrayOutputStream> photos;
 	private static final int MAX_SIZE = 5;
 	private int currentSize = 0;
 	
 	public ImageContainer() {
-		photos = new ConcurrentLinkedQueue<ByteArrayOutputStream>();
+		photos = new LinkedBlockingQueue<ByteArrayOutputStream>();
 	}
 	
 	public void addPhoto(ByteArrayOutputStream out) {		

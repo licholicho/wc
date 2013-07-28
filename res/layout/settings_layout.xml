@@ -19,6 +19,20 @@
     />
  
    <TextView
+        android:id="@+id/compress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:text="Compression"
+        />  
+ 
+    <Spinner
+        android:id="@+id/compressSpin"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawSelectorOnTop="true" />
+ 
+   <TextView
         android:id="@+id/fps"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" 

@@ -219,10 +219,15 @@ public class MainActivity2 extends Activity implements
 						cameraView.getPreviewFormat(), picWidth, picHeight,
 						null);
 				output_stream = new ByteArrayOutputStream();
-				image.compressToJpeg(new Rect(0, 0, picWidth, picHeight), 90,
+				image.compressToJpeg(new Rect(0, 0, picWidth, picHeight), 80,
 						output_stream);
 				imageContainer.addPhoto(output_stream);
 				inProc = false;
+				try {
+					Thread.sleep(20);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	};
